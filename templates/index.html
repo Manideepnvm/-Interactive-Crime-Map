@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 Interactive Crime Map - Andhra Pradesh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="row bg-dark text-white p-3">
+            <div class="col-12 text-center">
+                <h1><i class="fas fa-map-marked-alt"></i> Interactive Crime Map</h1>
+                <p class="mb-0">Andhra Pradesh Crime Report Dashboard</p>
+            </div>
+        </div>
+
+        <!-- Search and Filter Panel -->
+        <div class="row bg-light p-3">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input type="text" class="form-control" id="locationSearch" placeholder="Search location...">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="crimeTypeFilter">
+                    <option value="All">All Crime Types</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="severityFilter">
+                    <option value="All">All Severity</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-secondary w-100" onclick="resetFilters()">
+                    <i class="fas fa-refresh"></i> Reset
+                </button>
+            </div>
+            <div class="col-md-1">
+                <div class="spinner-border text-primary d-none" id="loadingSpinner" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info mb-2">
+                    <strong>Legend:</strong> 
+                    <span class="badge bg-success">Low Severity</span>
+                    <span class="badge bg-warning">Medium Severity</span>
+                    <span class="badge bg-danger">High Severity</span>
+                    | Click markers for details | Use controls to toggle layers
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        <div class="row">
+            <div class="col-12">
+                <div id="mapContainer">
+                    {{ map_html|safe }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Panel -->
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar"></i> Quick Stats</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <div class="stat-box bg-primary text-white p-3 rounded">
+                                    <h3 id="totalCrimes">-</h3>
+                                    <p>Total Crimes</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-box bg-success text-white p-3 rounded">
+                                    <h3 id="lowSeverity">-</h3>
+                                    <p>Low Severity</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-box bg-warning text-white p-3 rounded">
+                                    <h3 id="mediumSeverity">-</h3>
+                                    <p>Medium Severity</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-box bg-danger text-white p-3 rounded">
+                                    <h3 id="highSeverity">-</h3>
+                                    <p>High Severity</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load crime types on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCrimeTypes();
+            updateStats();
+        });
+
+        function loadCrimeTypes() {
+            fetch('/api/crime_types')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('crimeTypeFilter');
+                    data.forEach(crimeType => {
+                        const option = document.createElement('option');
+                        option.value = crimeType;
+                        option.textContent = crimeType;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error loading crime types:', error));
+        }
+
+        function applyFilters() {
+            const locationSearch = document.getElementById('locationSearch').value;
+            const crimeType = document.getElementById('crimeTypeFilter').value;
+            const severity = document.getElementById('severityFilter').value;
+
+            // Show loading spinner
+            document.getElementById('loadingSpinner').classList.remove('d-none');
+
+            const filterData = {
+                location: locationSearch,
+                crime_type: crimeType,
+                severity: severity
+            };
+
+            fetch('/filter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filterData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('mapContainer').innerHTML = data.map_html;
+                updateStats();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error applying filters. Please try again.');
+            })
+            .finally(() => {
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').classList.add('d-none');
+            });
+        }
+
+        function resetFilters() {
+            document.getElementById('locationSearch').value = '';
+            document.getElementById('crimeTypeFilter').value = 'All';
+            document.getElementById('severityFilter').value = 'All';
+            
+            // Reload original map
+            location.reload();
+        }
+
+        function updateStats() {
+            // This is a simple implementation - you can enhance it by fetching actual filtered stats
+            const totalElement = document.getElementById('totalCrimes');
+            const lowElement = document.getElementById('lowSeverity');
+            const mediumElement = document.getElementById('mediumSeverity');
+            const highElement = document.getElementById('highSeverity');
+
+            // For now, showing static values - you can make this dynamic by adding an API endpoint
+            totalElement.textContent = '100';
+            lowElement.textContent = '45';
+            mediumElement.textContent = '35';
+            highElement.textContent = '20';
+        }
+
+        // Enable Enter key for search
+        document.getElementById('locationSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                applyFilters();
+            }
+        });
+    </script>
+</body>
+</html>

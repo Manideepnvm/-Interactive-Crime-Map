@@ -1,0 +1,101 @@
+id,crime_type,date,severity,latitude,longitude,location_description
+1,Theft,2025-05-01,Low,16.5062,80.6480,Vijayawada Railway Station
+2,Burglary,2025-05-02,High,13.6288,79.4192,Tirupati Temple Area
+3,Assault,2025-05-03,Medium,17.6868,83.2185,Visakhapatnam Beach Road
+4,Theft,2025-05-04,Low,15.8281,78.0373,Kurnool Bus Station
+5,Homicide,2025-05-05,High,14.4426,79.9865,Nellore Market Area
+6,Robbery,2025-05-06,High,16.5062,80.6480,Vijayawada MG Road
+7,Fraud,2025-05-07,Medium,13.6288,79.4192,Tirupati Railway Station
+8,Assault,2025-05-08,Medium,17.6868,83.2185,Visakhapatnam Port Area
+9,Theft,2025-05-09,Low,15.8281,78.0373,Kurnool Government Hospital
+10,Burglary,2025-05-10,High,14.4426,79.9865,Nellore Collector Office
+11,Drug Trafficking,2025-05-11,High,16.3067,80.4365,Guntur Police Station
+12,Theft,2025-05-12,Low,17.6868,83.2185,Visakhapatnam Airport
+13,Assault,2025-05-13,Medium,16.5062,80.6480,Vijayawada Benz Circle
+14,Fraud,2025-05-14,Medium,13.6288,79.4192,Tirupati Bus Stand
+15,Robbery,2025-05-15,High,15.8281,78.0373,Kurnool City Center
+16,Theft,2025-05-16,Low,14.4426,79.9865,Nellore Beach Road
+17,Burglary,2025-05-17,High,17.6868,83.2185,Visakhapatnam Steel Plant
+18,Assault,2025-05-18,Medium,16.3067,80.4365,Guntur General Hospital
+19,Fraud,2025-05-19,Medium,16.5062,80.6480,Vijayawada One Town
+20,Theft,2025-05-20,Low,13.6288,79.4192,Tirupati Airport
+21,Drug Trafficking,2025-05-21,High,15.8281,78.0373,Kurnool Medical College
+22,Robbery,2025-05-22,High,14.4426,79.9865,Nellore Railway Station
+23,Assault,2025-05-23,Medium,17.6868,83.2185,Visakhapatnam University
+24,Theft,2025-05-24,Low,16.3067,80.4365,Guntur Market Area
+25,Burglary,2025-05-25,High,16.5062,80.6480,Vijayawada Labbipet
+26,Fraud,2025-05-26,Medium,13.6288,79.4192,Tirupati Sri Venkateswara University
+27,Assault,2025-05-27,Medium,15.8281,78.0373,Kurnool Collectorate
+28,Theft,2025-05-28,Low,14.4426,79.9865,Nellore Bus Station
+29,Robbery,2025-05-29,High,17.6868,83.2185,Visakhapatnam Naval Base
+30,Drug Trafficking,2025-05-30,High,16.3067,80.4365,Guntur Engineering College
+31,Theft,2025-05-31,Low,13.0827,80.2707,Chittoor Market
+32,Burglary,2025-06-01,High,15.4569,78.8267,Anantapur Bus Stand
+33,Assault,2025-06-02,Medium,14.9180,79.7378,Kadapa Railway Station
+34,Fraud,2025-06-03,Medium,16.9891,82.2475,Kakinada Port
+35,Theft,2025-06-04,Low,15.2993,76.6394,Hindupur Town
+36,Robbery,2025-06-05,High,14.6819,77.5985,Cuddapah Government Hospital
+37,Assault,2025-06-06,Medium,16.7569,81.6708,Eluru Bus Station
+38,Drug Trafficking,2025-06-07,High,17.3840,78.4564,Khammam Border Area
+39,Theft,2025-06-08,Low,15.9129,79.7400,Ongole Market
+40,Burglary,2025-06-09,High,13.2172,79.1003,Chandragiri Fort Area
+41,Fraud,2025-06-10,Medium,16.5183,80.6393,Machilipatnam Port
+42,Assault,2025-06-11,Medium,14.4673,78.8242,Proddatur Town Center
+43,Theft,2025-06-12,Low,17.2403,80.1778,Bhimavaram College
+44,Robbery,2025-06-13,High,13.4095,79.1089,Puttur Bus Stand
+45,Drug Trafficking,2025-06-14,High,15.7393,78.1457,Adoni Railway Station
+46,Theft,2025-06-15,Low,16.2160,81.1498,Amalapuram Market
+47,Burglary,2025-06-16,High,14.9120,78.1380,Madanapalle Hospital
+48,Assault,2025-06-17,Medium,17.0005,81.7982,Rajahmundry Airport
+49,Fraud,2025-06-18,Medium,15.4855,78.0367,Guntakal Junction
+50,Theft,2025-06-19,Low,13.7563,79.2055,Srikalahasti Temple
+51,Robbery,2025-06-20,High,16.9066,82.2329,Kakinada Beach
+52,Assault,2025-06-21,Medium,14.4651,79.0238,Kavali Town
+53,Drug Trafficking,2025-06-22,High,15.8387,78.7733,Bellary Border
+54,Theft,2025-06-23,Low,17.4123,82.2705,Peddapuram Station
+55,Burglary,2025-06-24,High,13.6540,79.5072,Renigunta Airport
+56,Fraud,2025-06-25,Medium,16.4934,80.9726,Tenali Bus Stand
+57,Assault,2025-06-26,Medium,15.1394,78.1514,Gooty Railway Junction
+58,Theft,2025-06-27,Low,14.2456,79.8331,Gudur Market
+59,Robbery,2025-06-28,High,17.1232,80.0927,Narasaraopet Town
+60,Drug Trafficking,2025-06-29,High,13.5383,79.3176,Nagari Police Station
+61,Theft,2025-06-30,Low,16.7649,81.2446,Tanuku Bus Stand
+62,Burglary,2025-07-01,High,15.0162,78.5686,Tadipatri Market
+63,Assault,2025-07-02,Medium,14.6709,78.2235,Jammalamadugu Town
+64,Fraud,2025-07-03,Medium,17.2792,80.8987,Palakol Station
+65,Theft,2025-07-04,Low,13.9626,79.8087,Venkatagiri Fort
+66,Robbery,2025-07-05,High,16.0446,80.1608,Chirala Beach
+67,Assault,2025-07-06,Medium,15.7539,78.2083,Rayachoti Market
+68,Drug Trafficking,2025-07-07,High,14.7780,78.1348,Kadiri Town
+69,Theft,2025-07-08,Low,17.5102,82.5727,Tuni Railway Station
+70,Burglary,2025-07-09,High,13.4387,79.4926,Palamaner Bus Stand
+71,Fraud,2025-07-10,Medium,16.3244,80.4104,Sattenapalli Market
+72,Assault,2025-07-11,Medium,15.4021,78.7009,Dharmavaram Town
+73,Theft,2025-07-12,Low,14.3916,79.9818,Sullurpeta Station
+74,Robbery,2025-07-13,High,17.0702,81.8040,Kovvur Bridge Area
+75,Drug Trafficking,2025-07-14,High,13.7073,79.0177,Pakala Junction
+76,Theft,2025-07-15,Low,16.4418,80.9813,Repalle Market
+77,Burglary,2025-07-16,High,15.3173,78.4373,Hindupur Railway Station
+78,Assault,2025-07-17,Medium,14.5421,78.7443,Yerraguntla Town
+79,Fraud,2025-07-18,Medium,17.4375,82.1608,Pithapuram Temple
+80,Theft,2025-07-19,Low,13.8751,79.4190,Kalahasti Market
+81,Robbery,2025-07-20,High,16.2379,81.0158,Bapatla College
+82,Assault,2025-07-21,Medium,15.0581,78.6056,Penukonda Fort
+83,Drug Trafficking,2025-07-22,High,14.9134,79.1289,Mydukur Station
+84,Theft,2025-07-23,Low,17.2973,80.4347,Jangareddygudem Market
+85,Burglary,2025-07-24,High,13.6173,79.8292,Naidupeta Town
+86,Fraud,2025-07-25,Medium,16.5901,80.5218,Nuzvidu Bus Stand
+87,Assault,2025-07-26,Medium,15.7231,78.9647,Kurnool Medical College
+88,Theft,2025-07-27,Low,14.6234,78.9605,Pulivendula Market
+89,Robbery,2025-07-28,High,17.3398,80.6225,Eluru Collectorate
+90,Drug Trafficking,2025-07-29,High,13.5644,79.1881,Tirupati Bypass
+91,Theft,2025-07-30,Low,16.7204,80.9712,Machilipatnam Beach
+92,Burglary,2025-07-31,High,15.2069,78.0431,Guntakal Hospital
+93,Assault,2025-08-01,Medium,14.7649,79.4654,Atmakur Market
+94,Fraud,2025-08-02,Medium,17.1847,82.4523,Yanam Port Area
+95,Theft,2025-08-03,Low,13.9404,79.8156,Renigunta Market
+96,Robbery,2025-08-04,High,16.4187,80.6214,Vijayawada Bus Station
+97,Assault,2025-08-05,Medium,15.6789,78.5432,Anantapur Hospital
+98,Drug Trafficking,2025-08-06,High,14.8765,79.3421,Nellore Industrial Area
+99,Fraud,2025-08-07,Medium,17.5432,83.1098,Visakhapatnam IT Park
+100,Burglary,2025-08-08,High,16.2345,80.7890,Guntur Medical College
