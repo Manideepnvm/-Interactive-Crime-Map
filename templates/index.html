@@ -5,8 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🚨 Interactive Crime Map - Andhra Pradesh</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .stat-box {
+            transition: transform 0.2s;
+        }
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+        .navigate-btn {
+            margin-top: 10px;
+        }
+        .location-item {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 2px 0;
+        }
+        .location-item:hover {
+            background-color: #f8f9fa;
+        }
+        .suggestions-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+        .search-container {
+            position: relative;
+        }
+        #mapContainer {
+            min-height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -21,9 +61,12 @@
         <!-- Search and Filter Panel -->
         <div class="row bg-light p-3">
             <div class="col-md-3">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    <input type="text" class="form-control" id="locationSearch" placeholder="Search location...">
+                <div class="search-container">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="locationSearch" placeholder="Search location..." autocomplete="off">
+                    </div>
+                    <div class="suggestions-dropdown" id="suggestionsDropdown"></div>
                 </div>
             </div>
             <div class="col-md-2">
@@ -56,6 +99,24 @@
             </div>
         </div>
 
+        <!-- Navigation Panel -->
+        <div class="row bg-info text-white p-2">
+            <div class="col-md-8">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-location-arrow me-2"></i>
+                    <span id="selectedLocation">Select a location to navigate</span>
+                </div>
+            </div>
+            <div class="col-md-4 text-end">
+                <button class="btn btn-success btn-sm" id="navigateBtn" onclick="navigateToLocation()" disabled>
+                    <i class="fas fa-directions"></i> Navigate with Google Maps
+                </button>
+                <button class="btn btn-warning btn-sm ms-2" onclick="getCurrentLocation()">
+                    <i class="fas fa-crosshairs"></i> My Location
+                </button>
+            </div>
+        </div>
+
         <!-- Legend -->
         <div class="row">
             <div class="col-12">
@@ -64,7 +125,7 @@
                     <span class="badge bg-success">Low Severity</span>
                     <span class="badge bg-warning">Medium Severity</span>
                     <span class="badge bg-danger">High Severity</span>
-                    | Click markers for details | Use controls to toggle layers
+                    | Click markers for details | Use controls to toggle layers | Select location to navigate
                 </div>
             </div>
         </div>
@@ -120,10 +181,17 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Load crime types on page load
+        let availableLocations = [];
+        let selectedLocationData = null;
+        let userLocation = null;
+
+        // Load crime types and locations on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadCrimeTypes();
+            loadLocations();
             updateStats();
+            getCurrentLocation();
+            setupLocationSearch();
         });
 
         function loadCrimeTypes() {
@@ -139,6 +207,63 @@
                     });
                 })
                 .catch(error => console.error('Error loading crime types:', error));
+        }
+
+        function loadLocations() {
+            fetch('/api/locations')
+                .then(response => response.json())
+                .then(data => {
+                    availableLocations = data;
+                })
+                .catch(error => console.error('Error loading locations:', error));
+        }
+
+        function setupLocationSearch() {
+            const searchInput = document.getElementById('locationSearch');
+            const suggestionsDropdown = document.getElementById('suggestionsDropdown');
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                
+                if (query.length < 2) {
+                    suggestionsDropdown.style.display = 'none';
+                    return;
+                }
+
+                const filteredLocations = availableLocations.filter(location => 
+                    location.toLowerCase().includes(query)
+                ).slice(0, 10);
+
+                if (filteredLocations.length > 0) {
+                    suggestionsDropdown.innerHTML = filteredLocations.map(location => 
+                        `<div class="location-item" onclick="selectLocation('${location}')">${location}</div>`
+                    ).join('');
+                    suggestionsDropdown.style.display = 'block';
+                } else {
+                    suggestionsDropdown.style.display = 'none';
+                }
+            });
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !suggestionsDropdown.contains(e.target)) {
+                    suggestionsDropdown.style.display = 'none';
+                }
+            });
+        }
+
+        function selectLocation(location) {
+            document.getElementById('locationSearch').value = location;
+            document.getElementById('suggestionsDropdown').style.display = 'none';
+            
+            // Update selected location for navigation
+            selectedLocationData = {
+                name: location,
+                address: location + ', Andhra Pradesh, India'
+            };
+            
+            document.getElementById('selectedLocation').textContent = location;
+            document.getElementById('navigateBtn').disabled = false;
         }
 
         function applyFilters() {
@@ -166,6 +291,11 @@
             .then(data => {
                 document.getElementById('mapContainer').innerHTML = data.map_html;
                 updateStats();
+                
+                // If location is selected, prepare for navigation
+                if (locationSearch) {
+                    selectLocation(locationSearch);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -181,31 +311,142 @@
             document.getElementById('locationSearch').value = '';
             document.getElementById('crimeTypeFilter').value = 'All';
             document.getElementById('severityFilter').value = 'All';
+            document.getElementById('selectedLocation').textContent = 'Select a location to navigate';
+            document.getElementById('navigateBtn').disabled = true;
+            selectedLocationData = null;
             
             // Reload original map
             location.reload();
         }
 
         function updateStats() {
-            // This is a simple implementation - you can enhance it by fetching actual filtered stats
-            const totalElement = document.getElementById('totalCrimes');
-            const lowElement = document.getElementById('lowSeverity');
-            const mediumElement = document.getElementById('mediumSeverity');
-            const highElement = document.getElementById('highSeverity');
-
-            // For now, showing static values - you can make this dynamic by adding an API endpoint
-            totalElement.textContent = '100';
-            lowElement.textContent = '45';
-            mediumElement.textContent = '35';
-            highElement.textContent = '20';
+            // Enhanced stats update - you can make this dynamic with actual API data
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalCrimes').textContent = data.total || '100';
+                    document.getElementById('lowSeverity').textContent = data.low || '45';
+                    document.getElementById('mediumSeverity').textContent = data.medium || '35';
+                    document.getElementById('highSeverity').textContent = data.high || '20';
+                })
+                .catch(error => {
+                    // Fallback to static values if API fails
+                    document.getElementById('totalCrimes').textContent = '100';
+                    document.getElementById('lowSeverity').textContent = '45';
+                    document.getElementById('mediumSeverity').textContent = '35';
+                    document.getElementById('highSeverity').textContent = '20';
+                });
         }
 
-        // Enable Enter key for search
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        console.log('User location obtained:', userLocation);
+                    },
+                    function(error) {
+                        console.log('Error getting location:', error.message);
+                        // Default to Vijayawada, Andhra Pradesh
+                        userLocation = {
+                            lat: 16.5062,
+                            lng: 80.6480
+                        };
+                    }
+                );
+            } else {
+                console.log('Geolocation is not supported');
+                // Default to Vijayawada, Andhra Pradesh
+                userLocation = {
+                    lat: 16.5062,
+                    lng: 80.6480
+                };
+            }
+        }
+
+        function navigateToLocation() {
+            if (!selectedLocationData) {
+                alert('Please select a location first');
+                return;
+            }
+
+            // Create Google Maps URL for navigation
+            const destination = encodeURIComponent(selectedLocationData.address);
+            let mapsUrl;
+
+            if (userLocation) {
+                // Include current location as starting point
+                const origin = `${userLocation.lat},${userLocation.lng}`;
+                mapsUrl = `https://www.google.com/maps/dir/${origin}/${destination}`;
+            } else {
+                // Just navigate to destination
+                mapsUrl = `https://www.google.com/maps/search/${destination}`;
+            }
+
+            // Open Google Maps in a new window/tab
+            window.open(mapsUrl, '_blank');
+        }
+
+        // Function to handle marker clicks (call this from your map generation)
+        function onMarkerClick(location, address) {
+            selectedLocationData = {
+                name: location,
+                address: address || location + ', Andhra Pradesh, India'
+            };
+            
+            document.getElementById('selectedLocation').textContent = location;
+            document.getElementById('navigateBtn').disabled = false;
+            document.getElementById('locationSearch').value = location;
+        }
+
+        // Enhanced search with Enter key
         document.getElementById('locationSearch').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                applyFilters();
+                const value = this.value.trim();
+                if (value) {
+                    selectLocation(value);
+                    applyFilters();
+                }
             }
         });
+
+        // Mobile-friendly navigation
+        function openMobileNavigation() {
+            if (!selectedLocationData) {
+                alert('Please select a location first');
+                return;
+            }
+
+            const destination = encodeURIComponent(selectedLocationData.address);
+            
+            // Check if user is on mobile
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // Try to open native Google Maps app first
+                const nativeUrl = `googlemaps://maps.google.com/maps/dir/?destination=${destination}`;
+                const webUrl = `https://www.google.com/maps/dir/?destination=${destination}`;
+                
+                // Create a temporary link to test if native app opens
+                const tempLink = document.createElement('a');
+                tempLink.href = nativeUrl;
+                tempLink.style.display = 'none';
+                document.body.appendChild(tempLink);
+                
+                // Try native app, fallback to web
+                setTimeout(() => {
+                    window.open(webUrl, '_blank');
+                    document.body.removeChild(tempLink);
+                }, 1000);
+                
+                tempLink.click();
+            } else {
+                navigateToLocation();
+            }
+        }
     </script>
 </body>
 </html>
