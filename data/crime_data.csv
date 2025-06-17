@@ -199,3 +199,53 @@ id,crime_type,date,severity,latitude,longitude,location_description
 198,Assault,2025-11-14,Medium,10.7905,78.7047,Tiruchirappalli Rock Fort
 199,Drug Trafficking,2025-11-15,High,26.9157,70.9083,Jaisalmer Fort Area
 200,Fraud,2025-11-16,High,13.3379,74.7421,Udupi Krishna Mutt
+201,Theft,2025-11-17,Medium,22.5726,88.3639,Kolkata Park Street
+202,Vandalism,2025-11-18,Low,19.0760,72.8777,Mumbai Bandra Station
+203,Robbery,2025-11-19,High,28.6139,77.2090,Delhi Connaught Place
+204,Assault,2025-11-20,Medium,12.9716,77.5946,Bangalore MG Road
+205,Drug Trafficking,2025-11-21,High,23.2599,77.4126,Bhopal New Market
+206,Cybercrime,2025-11-22,High,18.5204,73.8567,Pune FC Road
+207,Fraud,2025-11-23,High,21.1702,72.8311,Surat Textile Market
+208,Burglary,2025-11-24,Medium,26.2389,73.0243,Jodhpur Clock Tower
+209,Theft,2025-11-25,Low,15.2993,74.1240,Panaji Market Square
+210,Vandalism,2025-11-26,Low,11.0168,76.9558,Coimbatore RS Puram
+211,Assault,2025-11-27,Medium,25.3176,82.9739,Varanasi Dashashwamedh Ghat
+212,Drug Trafficking,2025-11-28,High,27.1767,78.0081,Agra Sadar Bazaar
+213,Robbery,2025-11-29,High,20.2961,85.8245,Bhubaneswar Master Canteen
+214,Cybercrime,2025-11-30,Medium,17.3850,78.4867,Hyderabad Begum Bazaar
+215,Fraud,2025-12-01,High,9.9312,76.2673,Kochi Marine Drive
+216,Burglary,2025-12-02,Medium,31.1048,77.1734,Shimla The Ridge
+217,Theft,2025-12-03,Low,24.5854,73.7125,Udaipur Hathi Pol
+218,Vandalism,2025-12-04,Low,16.5062,80.6480,Vijayawada Gandhi Hill
+219,Assault,2025-12-05,High,13.0827,80.2707,Chennai T Nagar
+220,Drug Trafficking,2025-12-06,High,22.7196,75.8577,Indore Sarafa Bazaar
+221,Robbery,2025-12-07,Medium,19.9975,73.7898,Nashik College Road
+222,Cybercrime,2025-12-08,High,30.7333,76.7794,Chandigarh Sector 17
+223,Fraud,2025-12-09,High,14.5203,75.7223,Hospet Main Bazaar
+224,Burglary,2025-12-10,Medium,29.9457,78.1642,Haridwar Railway Station
+225,Theft,2025-12-11,Low,32.7266,74.8570,Jammu City Square
+226,Vandalism,2025-12-12,Low,34.0837,74.7973,Srinagar Lal Chowk
+227,Assault,2025-12-13,Medium,8.5241,76.9366,Trivandrum Palayam
+228,Drug Trafficking,2025-12-14,High,25.5941,85.1376,Patna Fraser Road
+229,Robbery,2025-12-15,High,26.4499,80.3319,Kanpur Mall Road
+230,Cybercrime,2025-12-16,Medium,23.1765,79.9015,Jabalpur Napier Town
+231,Fraud,2025-12-17,High,28.4595,77.0266,Gurgaon Sector 14
+232,Burglary,2025-12-18,Medium,12.2958,76.6394,Mysore Devaraja Market
+233,Theft,2025-12-19,Low,11.9416,79.8083,Pondicherry White Town
+234,Vandalism,2025-12-20,Low,27.5706,95.1183,Dibrugarh Graham Bazaar
+235,Assault,2025-12-21,High,26.1445,91.7362,Guwahati Fancy Bazaar
+236,Drug Trafficking,2025-12-22,High,24.6637,87.8495,Bolpur Railway Station
+237,Robbery,2025-12-23,Medium,22.9868,87.8550,Kharagpur Technology Square
+238,Cybercrime,2025-12-24,High,18.1124,79.0193,Warangal Station Road
+239,Fraud,2025-12-25,Medium,15.8497,74.4977,Margao Market
+240,Burglary,2025-12-26,Low,13.6288,79.4192,Tirupati Bus Stand
+241,Theft,2025-12-27,Medium,11.2588,75.7804,Kozhikode SM Street
+242,Vandalism,2025-12-28,Low,9.2648,76.2930,Munnar Bazar
+243,Assault,2025-12-29,High,8.0883,77.0644,Kanyakumari Beach Road
+244,Drug Trafficking,2025-12-30,High,21.2787,81.8661,Raipur Pandri
+245,Robbery,2025-12-31,Medium,23.8103,86.4428,Dhanbad Bank More
+246,Cybercrime,2026-01-01,High,25.0961,85.3131,Gaya Station Road
+247,Fraud,2026-01-02,High,24.7914,85.0002,Rajgir Market
+248,Burglary,2026-01-03,Medium,25.6093,85.1235,Patna Boring Road
+249,Theft,2026-01-04,Low,26.7606,83.3732,Gorakhpur Civil Lines
+250,Vandalism,2026-01-05,Low,27.8974,78.0880,Aligarh University Road
